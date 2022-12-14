@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>实验四：动画和交互</title>
+    <script id="rot-v-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	uniform float theta;
+
+	void main()
+	{
+		float u = cos( theta );
+		float v = sin( theta );
+
+		gl_Position.x = vPosition.x * u - vPosition.y * v;
+		gl_Position.y = vPosition.x * v + vPosition.y * u;
+		gl_Position.z = 0.0;
+		gl_Position.w = 1.0;
+	}
+	</script>
+
+    <script id="rot-f-shader" type="x-shader/x-fragment">
+	precision mediump float;
+
+	void main()
+	{
+		gl_FragColor = vec4( 1.5, 0.0, 1.0, 1.0 );
+	}
+	</script>
+
+    <script type="text/javascript" src="webgl-utils41.js"></script>
+    <script type="text/javascript" src="initShaders41.js"></script>
+    <script type="text/javascript" src="gl-matrix-min41.js"></script>
+
+    <script type="text/javascript" src="rotsquareslider41.js"></script>
+</head>
+
+<body onload="initRotSquare()">
+    <h1>实验4：动画和交互</h1><br>
+    <canvas id="rot-canvas" width="512" height="512">你的浏览器不支持HTML5 canvas元素</canvas>
+    <fieldset>
+        <legend>控制</legend>
+        <button id="direction" onclick="changeDir()">变换方向</button><br>
+		<button id="small" onclick="doSmall()">缩小</button><button id="big" onclick="doBig()">放大</button><br>
+        转速 0<input type="range" id="speedcon" min="0" max="360" value="50" step="30"> 360
+    </fieldset>
+</body>
+
+</html>
